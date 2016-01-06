@@ -13,7 +13,7 @@
 static CGFloat const PADDING_X = 4.0;
 static CGFloat const PADDING_Y = 2.0;
 
-static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
+static NSString *const UNSELECTED_LABEL_FORMAT = @"%@%@";
 
 
 @interface CLTokenView ()
@@ -30,10 +30,12 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
 
 @implementation CLTokenView
 
-- (id)initWithToken:(CLToken *)token font:(nullable UIFont *)font
+- (id)initWithToken:(CLToken *)token font:(nullable UIFont *)font separator:(NSString*)separator
 {
     self = [super initWithFrame:CGRectZero];
     if (self) {
+        self.separator = separator;
+        
         UIColor *tintColor = [UIColor colorWithRed:0.0823 green:0.4941 blue:0.9843 alpha:1.0];
         if ([self respondsToSelector:@selector(tintColor)]) {
             tintColor = self.tintColor;
@@ -61,8 +63,8 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
 
         self.displayText = token.displayText;
 
-        // Configure for the token, unselected shows "[displayText]," and selected is "[displayText]"
-        NSString *labelString = [NSString stringWithFormat:UNSELECTED_LABEL_FORMAT, self.displayText];
+        // Configure for the token, unselected shows "[displayText][separator]" and selected is "[displayText]"
+        NSString *labelString = [NSString stringWithFormat:UNSELECTED_LABEL_FORMAT, self.displayText, self.separator];
         NSMutableAttributedString *attrString =
         [[NSMutableAttributedString alloc] initWithString:labelString
                                                attributes:@{NSFontAttributeName : self.label.font,
@@ -86,14 +88,14 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
 
 - (CGSize)intrinsicContentSize
 {
-    CGSize labelIntrinsicSize = self.selectedLabel.intrinsicContentSize;
+    CGSize labelIntrinsicSize = self.label.intrinsicContentSize;
     return CGSizeMake(labelIntrinsicSize.width+(2.0*PADDING_X), labelIntrinsicSize.height+(2.0*PADDING_Y));
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
 {
     CGSize fittingSize = CGSizeMake(size.width-(2.0*PADDING_X), size.height-(2.0*PADDING_Y));
-    CGSize labelSize = [self.selectedLabel sizeThatFits:fittingSize];
+    CGSize labelSize = [self.label sizeThatFits:fittingSize];
     return CGSizeMake(labelSize.width+(2.0*PADDING_X), labelSize.height+(2.0*PADDING_Y));
 }
 
@@ -109,7 +111,7 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
     self.label.textColor = tintColor;
     self.selectedBackgroundView.backgroundColor = tintColor;
     NSMutableAttributedString *attrString = [self.label.attributedText mutableCopy];
-    NSString *labelString = [NSString stringWithFormat:UNSELECTED_LABEL_FORMAT, self.displayText];
+    NSString *labelString = [NSString stringWithFormat:UNSELECTED_LABEL_FORMAT, self.displayText, self.separator];
     NSRange tintRange = [labelString rangeOfString:self.displayText];
     // Make the overall text color gray
     [attrString setAttributes:@{NSForegroundColorAttributeName : [UIColor lightGrayColor]}
@@ -184,7 +186,6 @@ static NSString *const UNSELECTED_LABEL_FORMAT = @"%@,";
 
     CGRect labelFrame = CGRectInset(bounds, PADDING_X, PADDING_Y);
     self.selectedLabel.frame = labelFrame;
-    labelFrame.size.width += PADDING_X*2.0;
     self.label.frame = labelFrame;
 }
 

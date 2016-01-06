@@ -68,6 +68,8 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
 
     self.intrinsicContentHeight = STANDARD_ROW_HEIGHT;
     [self repositionViews];
+    
+    self.separator = @",";
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -116,7 +118,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     // Add token
     [self.tokens addObject:token];
     
-    CLTokenView *tokenView = [[CLTokenView alloc] initWithToken:token font:self.textField.font];
+    CLTokenView *tokenView = [[CLTokenView alloc] initWithToken:token font:self.textField.font separator:self.separator];
     
     if ([self respondsToSelector:@selector(tintColor)]) {
         tokenView.tintColor = self.tintColor;

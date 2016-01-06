@@ -82,6 +82,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, nonatomic, getter = isEditing) BOOL editing;
 @property (readonly, nonatomic) CGFloat textFieldDisplayOffset;
 @property (readonly, nonatomic, nullable) NSString *text;
+/** separator for token view. Default is "," */
+@property (copy, nonatomic) NSString* separator;
 
 - (void)addToken:(CLToken *)token;
 - (void)removeToken:(CLToken *)token;

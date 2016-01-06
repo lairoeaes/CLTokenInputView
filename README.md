@@ -1,7 +1,9 @@
 # CLTokenInputView
 
-![Image](http://cl.ly/image/1y3Q0u0q1N3H/iOS%20Simulator%20Screen%20Shot%20Jan%2028,%202015,%204.30.15%20PM.png)
+<img align="right" src="http://cl.ly/image/1y3Q0u0q1N3H/iOS%20Simulator%20Screen%20Shot%20Jan%2028,%202015,%204.30.15%20PM.png">
+
 [![Screencap GFY](http://zippy.gfycat.com/ImpressiveRapidGelding.gif)](http://gfycat.com/ImpressiveRapidGelding)
+
 
 
 ## About
@@ -68,6 +70,7 @@ Lastly, you can implement:
 - `autocapitalizationType` — Adjust the capitalization behavior (`UITextAutocapitalizationType`).
 - `autocorrectionType` — Adjust the autocorrection behavior (`UITextAutocorrectionType`).
 - `drawBottomBorder` — Set to YES if CLTokenInputView should draw a native-style border below itself.
+- `separator` — Set the separator after the displayed text in token view (New)
 
 ## Things I'd Like To Do:
 

@@ -53,6 +53,7 @@
     self.tokenInputView.placeholderText = @"Enter a name";
     self.tokenInputView.accessoryView = [self contactAddButton];
     self.tokenInputView.drawBottomBorder = YES;
+    self.tokenInputView.separator = @"、";
     
     self.secondTokenInputView.fieldName = NSLocalizedString(@"Cc:", nil);
     self.secondTokenInputView.drawBottomBorder = YES;
