@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class CLBackspaceDetectingTextField;
 @protocol CLBackspaceDetectingTextFieldDelegate <UITextFieldDelegate>
 
+/** called before text field deletes its text */
+- (void)textFieldWillDeleteBackwards:(UITextField *)textField;
+/** called after text field deletes its text */
 - (void)textFieldDidDeleteBackwards:(UITextField *)textField;
 
 @end

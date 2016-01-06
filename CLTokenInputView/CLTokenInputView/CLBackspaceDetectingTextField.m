@@ -24,12 +24,15 @@
 // Listen for the deleteBackward method from UIKeyInput protocol
 - (void)deleteBackward
 {
+    if ([self.delegate respondsToSelector:@selector(textFieldWillDeleteBackwards:)]) {
+        [self.delegate textFieldWillDeleteBackwards:self];
+    }
+    
+    [super deleteBackward];
+    
     if ([self.delegate respondsToSelector:@selector(textFieldDidDeleteBackwards:)]) {
         [self.delegate textFieldDidDeleteBackwards:self];
     }
-    // Call super afterwards, so the -text property will return text
-    // prior to the delete
-    [super deleteBackward];
 }
 
 // On iOS 8.0, deleteBackward is not called anymore, so according to:

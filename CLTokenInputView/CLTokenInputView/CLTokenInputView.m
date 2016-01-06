@@ -113,17 +113,27 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
         return;
     }
 
+    // Add token
     [self.tokens addObject:token];
+    
     CLTokenView *tokenView = [[CLTokenView alloc] initWithToken:token font:self.textField.font];
+    
     if ([self respondsToSelector:@selector(tintColor)]) {
         tokenView.tintColor = self.tintColor;
     }
+    
     tokenView.delegate = self;
+    
     CGSize intrinsicSize = tokenView.intrinsicContentSize;
     tokenView.frame = CGRectMake(0, 0, intrinsicSize.width, intrinsicSize.height);
+    
     [self.tokenViews addObject:tokenView];
+    
     [self addSubview:tokenView];
+    
+    // Clear text field
     self.textField.text = @"";
+    
     if ([self.delegate respondsToSelector:@selector(tokenInputView:didAddToken:)]) {
         [self.delegate tokenInputView:self didAddToken:token];
     }
@@ -132,6 +142,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     [self onTextFieldDidChange:self.textField];
 
     [self updatePlaceholderTextVisibility];
+    
     [self repositionViews];
 }
 
@@ -298,21 +309,25 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
 
 
 #pragma mark - CLBackspaceDetectingTextFieldDelegate
-
-- (void)textFieldDidDeleteBackwards:(UITextField *)textField
+- (void)textFieldWillDeleteBackwards:(UITextField *)textField
 {
-    // Delay selecting the next token slightly, so that on iOS 8
-    // the deleteBackward on CLTokenView is not called immediately,
-    // causing a double-delete
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (textField.text.length == 0) {
+    if (textField.text.length == 0) {
+        // Delay selecting the next token slightly, so that on iOS 8
+        // the deleteBackward on CLTokenView is not called immediately,
+        // causing a double-delete
+        dispatch_async(dispatch_get_main_queue(), ^{
             CLTokenView *tokenView = self.tokenViews.lastObject;
             if (tokenView) {
                 [self selectTokenView:tokenView animated:YES];
                 [self.textField resignFirstResponder];
             }
-        }
-    });
+        });
+    }
+}
+
+- (void)textFieldDidDeleteBackwards:(UITextField *)textField
+{
+    // Do nothing
 }
 
 
