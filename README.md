@@ -5,7 +5,6 @@
 [![Screencap GFY](http://zippy.gfycat.com/ImpressiveRapidGelding.gif)](http://gfycat.com/ImpressiveRapidGelding)
 
 
-
 ## About
 
 `CLTokenInputView` is an almost pixel perfect replica of the input portion iOS's native contacts picker, used in Mail.app and Messages.app when composing a new message.
